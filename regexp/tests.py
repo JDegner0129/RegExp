@@ -1,49 +1,69 @@
 import unittest
-from expression import *
+from regexp import *
 
 
-class RegularExpressionTest(unittest.TestCase):
+class RegexpTest(unittest.TestCase):
 
-    def test_expression(self):
-        test_exp = Expression()
+    def setUp(self):
+        self.u = State(False)
+        self.v = State(False)
+        self.w = State(True)
+        self.u.add_transition('a', self.v)
+        self.v.add_transition('b', self.w)
+        self.v.add_transition('a', self.u)
+        self.u.add_transition('b', self.w)
+        self.w.add_transition('b', self.w)
+        self.w.add_transition('a', self.u)
 
-        print 'Testing character addition...'
+        self.machine = Automaton()
+        self.machine.start_state = self.u
+        self.machine.final_states = [self.w]
 
-        print 'characters == []?'
-        self.assertEqual(test_exp.characters, [])
+    def tearDown(self):
+        del self.u
+        del self.v
+        del self.w
 
-        print 'Adding "a" to character list...'
-        test_exp.add_character('a')
+    def test_node_add_transition(self):
+        self.assertEqual(self.u.transitions['a'], [self.v])
+        self.assertEqual(self.u.transitions['b'], [self.w])
 
-        print 'characters == [a]?'
-        self.assertEqual(test_exp.characters, ['a'])
+    def test_node_matching(self):
+        expr = "abbbbbbbbb"
+        self.assertEqual(self.u.match(expr), True)
 
-        print 'Testing change of match type...'
+        expr = "a"
+        self.assertEqual(self.u.match(expr), False)
 
-        print 'match_type == Once?'
-        self.assertEqual(test_exp.match_type, MatchType.Once)
+        expr = "b"
+        self.assertEqual(self.u.match(expr), True)
 
-        print 'Changing match type...'
-        test_exp.set_match_type(MatchType.ZeroToMany)
+        expr = "abbbbbbbbbba"
+        self.assertEqual(self.u.match(expr), False)
 
-        print 'match_type == ZeroToMany?'
-        self.assertEqual(test_exp.match_type, MatchType.ZeroToMany)
+        expr = "abbbbababab"
+        self.assertEqual(self.u.match(expr), True)
 
-        print 'Testing sub-expression addition...'
+    def test_automaton_setup(self):
+        self.assertEqual(self.machine.start_state, self.u)
+        self.assertEqual(self.machine.final_states, [self.w])
 
-        print 'subexpressions == []?'
-        self.assertEqual(test_exp.subexpressions, [])
+    def test_automaton_matching(self):
+        expr = "abbbbbbbbb"
+        self.assertEqual(self.machine.match(expr), True)
 
-        print 'Adding a subexpression with "b"...'
-        subexp = Expression()
-        subexp.add_character('b')
-        test_exp.add_subexpression(subexp)
+        expr = "a"
+        self.assertEqual(self.machine.match(expr), False)
 
-        print 'subexpressions == [Expression("b")]?'
-        self.assertEqual(test_exp.subexpressions, [subexp])
+        expr = "b"
+        self.assertEqual(self.machine.match(expr), True)
 
-    def test_regularexpression(self):
-        pass
+        expr = "abbbbbbbbbba"
+        self.assertEqual(self.machine.match(expr), False)
+
+        expr = "abbbbababab"
+        self.assertEqual(self.machine.match(expr), True)
+
 
 if __name__ == '__main__':
     unittest.main()
