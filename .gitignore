@@ -3,3 +3,6 @@
 
 # Python ignores
 *.pyc
+
+# OS X ignores
+.DS_Store

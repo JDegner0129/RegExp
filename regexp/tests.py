@@ -44,25 +44,14 @@ class RegexpTest(unittest.TestCase):
         expr = "abbbbababab"
         self.assertEqual(self.u.match(expr), True)
 
-    def test_automaton_setup(self):
-        self.assertEqual(self.machine.start_state, self.u)
-        self.assertEqual(self.machine.final_states, [self.w])
+    def test_regexp(self):
+        pattern = "((a|b)(a|b))*"
 
-    def test_automaton_matching(self):
-        expr = "abbbbbbbbb"
-        self.assertEqual(self.machine.match(expr), True)
+        expr = "e"
 
-        expr = "a"
-        self.assertEqual(self.machine.match(expr), False)
+        regexp = RegularExpression(pattern)
 
-        expr = "b"
-        self.assertEqual(self.machine.match(expr), True)
-
-        expr = "abbbbbbbbbba"
-        self.assertEqual(self.machine.match(expr), False)
-
-        expr = "abbbbababab"
-        self.assertEqual(self.machine.match(expr), True)
+        self.assertTrue(regexp.match(expr))
 
 
 if __name__ == '__main__':
