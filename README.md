@@ -1,6 +1,6 @@
-### Regular Expressions for Python ###
-*Jordan Degner
-*30 October 2013
+# Regular Expressions for Python #
+*Jordan Degner*
+*30 October 2013*
 
 A Python module for CSCE 428 (Automata, Computation, and Formal Languages) that, given a newline-delimited text file of the form:
 
