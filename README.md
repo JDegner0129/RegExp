@@ -1,11 +1,12 @@
 # Regular Expressions for Python #
-*Jordan Degner*
-*30 October 2013*
 
 A Python module for CSCE 428 (Automata, Computation, and Formal Languages) that, given a newline-delimited text file of the form:
 
-< regular expression >
-< strings >
+> pattern
+> expression 1
+> expression 2
+> ...
+> expression n
 
 Will evaluate all of the provided strings for a match against the provided regular expression.
 
@@ -27,9 +28,9 @@ The provided regular expression must contain only the characters 'a', 'b', 'e' (
 provided regular expression and does not attempt to validate it before performing comparisons.
 
 ## How It Works ##
-1) The provided regular expression is parsed into a non-deterministic finite automaton.
-2) All remaining lines are saved into a list of strings.
-2) Every string in the list is tested against this automaton, and as they pass or fail, the results will be reported to standard
+1. The provided regular expression is parsed into a non-deterministic finite automaton.
+2. All remaining lines are saved into a list of strings.
+3. Every string in the list is tested against this automaton, and as they pass or fail, the results will be reported to standard
 output.
 
 ## Technologies Used ##
