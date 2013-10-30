@@ -3,9 +3,13 @@
 A Python module for CSCE 428 (Automata, Computation, and Formal Languages) that, given a newline-delimited text file of the form:
 
 > pattern
+>
 > expression 1
+>
 > expression 2
+>
 > ...
+>
 > expression n
 
 Will evaluate all of the provided strings for a match against the provided regular expression.
