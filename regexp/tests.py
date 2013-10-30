@@ -45,13 +45,34 @@ class RegexpTest(unittest.TestCase):
         self.assertEqual(self.u.match(expr), True)
 
     def test_regexp(self):
-        pattern = "((a|b)(a|b))*"
+        pattern1 = "(a|b)*a"
+        pattern2 = "((a|b)(a|b))*"
+        pattern3 = "aaa*b*a*a"
 
-        expr = "e"
+        regexp1 = RegularExpression(pattern1)
+        regexp2 = RegularExpression(pattern2)
+        regexp3 = RegularExpression(pattern3)
 
-        regexp = RegularExpression(pattern)
+        self.assertTrue(regexp1.match("aaaa"))
+        self.assertTrue(regexp1.match("aba"))
+        self.assertTrue(regexp1.match("bba"))
+        self.assertTrue(regexp1.match("a"))
+        self.assertFalse(regexp1.match("b"))
+        self.assertFalse(regexp1.match("bbb"))
 
-        self.assertTrue(regexp.match(expr))
+        self.assertTrue(regexp2.match("abbabb"))
+        self.assertTrue(regexp2.match("e"))
+        self.assertTrue(regexp2.match("aa"))
+        self.assertTrue(regexp2.match("ab"))
+        self.assertFalse(regexp2.match("aaaaa"))
+        self.assertFalse(regexp2.match("bba"))
+
+        self.assertTrue(regexp3.match("aabaa"))
+        self.assertTrue(regexp3.match("aaa"))
+        self.assertTrue(regexp3.match("aabba"))
+        self.assertFalse(regexp3.match("abbaa"))
+        self.assertFalse(regexp3.match("abbbbbbbbbbbbbbbbbbba"))
+        self.assertFalse(regexp3.match("bbaa"))
 
 
 if __name__ == '__main__':
