@@ -18,6 +18,9 @@ Will evaluate all of the provided strings for a match against the provided regul
 To run this program, execute the command `regexp.py < <inputfile>` from the command line. Or, if you prefer, simply
 provide a pattern and expressions from standard input.
 
+NOTE: If running on Unix-like operating systems, you'll need to run `python regexp.py < <inputfile>` in order for the module
+to function correctly.
+
 ## Input ##
 This module takes one input file from the command line and parses its first line as a regular expression and its remaining
 lines as strings to be evaluated for membership in this regular expression's language.
