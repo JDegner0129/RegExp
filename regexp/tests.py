@@ -48,10 +48,12 @@ class RegexpTest(unittest.TestCase):
         pattern1 = "(a|b)*a"
         pattern2 = "((a|b)(a|b))*"
         pattern3 = "aaa*b*a*a"
+        pattern4 = "a|(b|e)*"
 
         regexp1 = RegularExpression(pattern1)
         regexp2 = RegularExpression(pattern2)
         regexp3 = RegularExpression(pattern3)
+        regexp4 = RegularExpression(pattern4)
 
         self.assertTrue(regexp1.match("aaaa"))
         self.assertTrue(regexp1.match("aba"))
@@ -74,6 +76,14 @@ class RegexpTest(unittest.TestCase):
         self.assertFalse(regexp3.match("abbbbbbbbbbbbbbbbbbba"))
         self.assertFalse(regexp3.match("bbaa"))
 
+        self.assertTrue(regexp4.match("a"))
+        self.assertTrue(regexp4.match("b"))
+        self.assertTrue(regexp4.match("bbbbbbbeebbbbb"))
+        self.assertTrue(regexp4.match("e"))
+        self.assertFalse(regexp4.match("ab"))
+        self.assertFalse(regexp4.match("aa"))
+
 
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(RegexpTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)

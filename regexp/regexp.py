@@ -123,14 +123,16 @@ class RegularExpression(object):
     """
 
     def __init__(self, pattern):
-        self._start_state = None
-        self.build_machine(pattern)
+        self._start_state = self.build_machine(pattern)
 
     def match(self, expr):
         """
         Determines if this regular expression can match the
         expression provided by performing a match from this
         expression's equivalent NFA start state.
+        @param expr: The expression to match this regular
+        expression against
+        @return True if a match is found, False otherwise
         """
         return self._start_state.match(expr)
 
@@ -139,6 +141,8 @@ class RegularExpression(object):
         Builds a non-deterministic automaton that is equivalent
         to the provided pattern. Pattern must be fewer than 80
         characters and composed of (, ), |, *, a, b, e.
+        @param pattern: The pattern to build an NFA for.
+        @return The start state of the newly built NFA.
         """
 
         # Local variables
@@ -255,7 +259,7 @@ class RegularExpression(object):
 
             prev_proc_char = c
 
-        self._start_state = start_state
+        return start_state
 
 if __name__ == "__main__":
     pattern = None
